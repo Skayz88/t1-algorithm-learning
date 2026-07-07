@@ -1,9 +1,3 @@
-/*
- * VTB Group. Do not reproduce without permission in writing.
- *
- * Copyright (c) 2026 VTB Group. All rights reserved.
- */
-
 package org.t1.java.types.list;
 
 /**
