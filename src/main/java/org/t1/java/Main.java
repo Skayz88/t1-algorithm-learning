@@ -5,9 +5,12 @@ import org.t1.java.types.list.NetworkGraph;
 import org.t1.java.types.list.NetworkPoint;
 import org.t1.java.types.matrix.MatrixGraph;
 import org.t1.java.types.matrix.MatrixNode;
+import org.t1.java.types.maxmin.Result;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -18,8 +21,60 @@ import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
-//        MatrixGraph.printMatrix();
-//        NetworkGraph.printNetwork();
+
+        List<Integer> lst = List.of(5, 4, 2, 1, 3);
+        Result res = findMinMaxInTask(lst);
+        if (Objects.nonNull(res))
+            System.out.println("Max= " + res.max() + " min= " + res.min());
+
+        res = findMinMaxFast(lst);
+        if (Objects.nonNull(res))
+            System.out.println("Max= " + res.max() + " min= " + res.min());
+
+    }
+
+    public static Result findMinMaxFast(List<Integer> lst) {
+        if (Objects.isNull(lst) || lst.isEmpty()) return null;
+        Iterator<Integer> it = lst.iterator();
+        int min = it.next();
+        int max = min;
+
+        while (it.hasNext()) {
+            int a = it.next();
+            if (it.hasNext()) {
+                int b = it.next();
+                if (a < b) {
+                    if (a < min) min = a;
+                    if (b > max) max = b;
+                } else {
+                    if (b < min) min = b;
+                    if (a > max) max = a;
+
+                }
+            } else {
+                if (a < min) min = a;
+                if (a > max) max = a;
+            }
+        }
+        return new Result(min, max);
+    }
+
+    public static Result findMinMaxInTask(List<Integer> lst) {
+        if (Objects.isNull(lst) || lst.isEmpty()) return null;
+        int min = lst.get(0);
+        int max = lst.get(0);
+        for (int i = 1; i < lst.size(); i++) {
+            if (min > lst.get(i)) min = lst.get(i);
+            if (max < lst.get(i)) max = lst.get(i);
+        }
+        return new Result(min, max);
+    }
+
+
+    private static void startFirstStep() {
+
+        //        MatrixGraph.printMatrix();
+        //        NetworkGraph.printNetwork();
 //        System.out.println("--------------------------------------------------");
 
         MatrixNode[][] matrix = MatrixGraph.matrixNet();
@@ -31,8 +86,6 @@ public class Main {
 
         GraphNode graphNode = NetworkGraph.nodeNet();
         print(graphNode, new HashSet<>());
-
-
     }
 
     private static void print(GraphNode node, Set<GraphNode> visited) {
