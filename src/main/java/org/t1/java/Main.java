@@ -5,6 +5,8 @@ import org.t1.java.types.list.NetworkGraph;
 import org.t1.java.types.list.NetworkPoint;
 import org.t1.java.types.matrix.MatrixGraph;
 import org.t1.java.types.matrix.MatrixNode;
+import org.t1.java.types.superfastlist.dto.FastList;
+import org.t1.java.types.superfastlist.dto.Node;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -18,19 +20,39 @@ import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
+
+        FastList<String> list = new FastList<>();
+
+        Node<String> a = list.addFirst("A");
+        Node<String> b = list.addLast("B");
+        Node<String> c = list.addAfter(a, "C");
+
+        System.out.println(list.get(a));
+        System.out.println(list.get(c));
+
+        list.set(c, "C-NEW");
+        System.out.println(list.get(c));
+
+        list.remove(c);
+        System.out.println(list.contains("C-NEW"));
+
+
+
+
+
 //        MatrixGraph.printMatrix();
 //        NetworkGraph.printNetwork();
 //        System.out.println("--------------------------------------------------");
 
-        MatrixNode[][] matrix = MatrixGraph.matrixNet();
-        for (int i = 0; i < 6; i++) {
-            System.out.println(i + ":" + Arrays.toString(matrix[i]));
-        }
+//        MatrixNode[][] matrix = MatrixGraph.matrixNet();
+//        for (int i = 0; i < 6; i++) {
+//            System.out.println(i + ":" + Arrays.toString(matrix[i]));
+//        }
 
         System.out.println("****************************************************");
 
-        GraphNode graphNode = NetworkGraph.nodeNet();
-        print(graphNode, new HashSet<>());
+//        GraphNode graphNode = NetworkGraph.nodeNet();
+//        print(graphNode, new HashSet<>());
 
 
     }
