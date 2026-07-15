@@ -6,6 +6,8 @@ import org.t1.java.types.list.NetworkPoint;
 import org.t1.java.types.matrix.MatrixGraph;
 import org.t1.java.types.matrix.MatrixNode;
 import org.t1.java.types.maxmin.Result;
+import org.t1.java.types.superfastlist.dto.FastList;
+import org.t1.java.types.superfastlist.dto.Node;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -21,6 +23,25 @@ import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
+
+        FastList<String> list = new FastList<>();
+
+        Node<String> a = list.addFirst("A");
+        Node<String> b = list.addLast("B");
+        Node<String> c = list.addAfter(a, "C");
+
+        System.out.println(list.get(a));
+        System.out.println(list.get(c));
+
+        list.set(c, "C-NEW");
+        System.out.println(list.get(c));
+
+        list.remove(c);
+        System.out.println(list.contains("C-NEW"));
+
+        System.out.println(list.indexOf("B"));
+
+        //--------------------Задание 2 еще не проверили--------------------------------------
 
         List<Integer> lst = List.of(5, 4, 2, 1, 3);
         Result res = findMinMaxInTask(lst);
