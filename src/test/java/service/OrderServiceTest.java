@@ -140,7 +140,7 @@ class OrderServiceTest {
         double result = orderService.calc(items, "VIP");
         assertEquals(-90.0, result, 0.001); // -100 * 0.9 = -90
     }
-    
+
     @Test
     @DisplayName("Тест: нулевое количество — не влияет на сумму")
     void calc_shouldHandleZeroQuantity() {
