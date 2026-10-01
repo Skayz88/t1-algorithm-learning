@@ -29,6 +29,25 @@ class OrderServiceTest {
         assertEquals(350.0, result, 0.001); // 200 + 150 = 350
     }
 
+
+    /**
+     * TDD
+     * 2000 + 150 = 2150
+     * - (VIP 10%) = 1935
+     * - (кол-во более 20 - 20%) = 1548
+     * - (по сумме более 1000 - 50) = 1498
+     */
+    @Test
+    @DisplayName("Тест: обычный заказ со скидкой по кол-ву")
+    void calc_shouldReturnSumWithoutDiscountsByCount() {
+        List<Item> items = Arrays.asList(
+                new Item("Apple", 100.0, 20),   // 2000
+                new Item("Banana", 50.0, 3)    // 150
+        );
+        double result = orderService.calc(items, "VIP");
+        assertEquals(1498.0, result, 0.001); // 200 + 150 = 350
+    }
+
     @Test
     @DisplayName("Тест: VIP скидка 10%")
     void calc_shouldApplyVIPDiscount() {
@@ -86,17 +105,6 @@ class OrderServiceTest {
         double result = orderService.calc(items, "REGULAR");
         assertEquals(0.0, result, 0.001);
     }
-
-//    // Тест: null тип — не применяются скидки (как REGULAR)
-//    @Test
-//    @DisplayName("Тест: null тип — не применяются скидки (как REGULAR)")
-//    void calc_shouldTreatNullTypeAsRegular() {
-//        List<Item> items = Arrays.asList(
-//                new Item("Camera", 100.0, 10)  // 1000
-//        );
-//        double result = orderService.calc(items, null);
-//        assertEquals(1000.0, result, 0.001); // 1000 не > 1000 → не вычитаем 50
-//    }
 
     @Test
     @DisplayName("Тест: сумма ровно 1000 — не применяется -50")

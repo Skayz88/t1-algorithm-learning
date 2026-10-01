@@ -1,8 +1,10 @@
 package org.t1.java.service;
 
 import org.t1.java.dto.Item;
+import org.t1.java.service.discount.enums.DiscountByUserType;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -10,33 +12,24 @@ import java.util.List;
  */
 public class OrderService {
 
+    private final DiscountService discountService = new DiscountService();
+
     /**
      *
      * Раасчет стоимости товаров в корзине
-     * Проходим по корзине в любом случае, берем товары, даже с отрицательными суммами и ценами
-     * Рассчитываем скидку - для типа VIP 90%, для NEW 95, а для товаров на сумму более 1000 скидка 50
+     * Проходим по корзине, берем товары, вычисляем стоимость
+     * Рассчитываем скидку - для типа VIP 90%, для NEW 95, а для товаров на сумму более 1000 скидка 50 и добавляем 10% по кол-ву
+     *
      * @param items - Список товаров в корзине
-     * @param type - Тип покупателя
+     * @param type  - Тип покупателя
      * @return сколько денежек надо заплатить за всю красоту
      */
     public double calc(List<Item> items, String type) {
-        double s = 0;
-        for (Item i : items) {
-            s += i.getPrice() * i.getQuantity();
-        }
 
-        if (type.equals("VIP")) {
-            s = s * 0.9;
-        }
+        if (Objects.isNull(items) || items.isEmpty()) return 0;
 
-        if (type.equals("NEW")) {
-            s = s * 0.95;
-        }
-
-        if (s > 1000) {
-            s = s - 50;
-        }
-
-        return s;
+        return discountService.getSumAfterAllAvailableDiscounts(items, type);
     }
+
 }
+
